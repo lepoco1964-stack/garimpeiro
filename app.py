@@ -3,14 +3,12 @@ import pandas as pd
 from datetime import datetime, timedelta
 from googleapiclient.discovery import build
 
-# Configuração da página do App
 st.set_page_config(
     page_title="Garimpador Profissional de YouTube",
     page_icon="🚀",
     layout="wide"
 )
 
-# Estilização visual limpa e moderna
 st.markdown("""
     <style>
     .stTabs [data-baseweb="tab-list"] {
@@ -40,7 +38,6 @@ st.markdown("""
 st.title("🚀 Garimpador Profissional de Canais")
 st.markdown("Encontre canais promissores em formato de painel visual com fotos, métricas e acesso direto.")
 
-# Abas organizadas
 aba1, aba2, aba3 = st.tabs(["⚙️ Configurações & Nicho", "🎯 Canais de Referência", "📊 Painel Visual de Resultados"])
 
 with aba1:
@@ -74,7 +71,6 @@ with aba3:
     st.subheader("Executar Garimpagem")
     executar_busca = st.button("🔥 INICIAR GARIMPAGEM VISUAL")
 
-# Função de busca melhorada
 def pegar_dados_canal(youtube_client, canal_id, origem="Busca automática"):
     try:
         stats = youtube_client.channels().list(
@@ -142,7 +138,6 @@ if executar_busca:
             if todos_canais:
                 st.success(f"🎉 Encontrados {len(todos_canais)} canais promissores!")
                 
-                # Exibição em Cards Visuais Modernos
                 for canal in todos_canais:
                     with st.container():
                         st.markdown(f"""
@@ -161,7 +156,6 @@ if executar_busca:
                             st.link_button("🔗 Aceder ao Canal no YouTube", canal['url'])
                         st.divider()
                 
-                # Exportar para Excel
                 df = pd.DataFrame(todos_canais)
                 nome_arquivo = f"canais-{nicho.replace(' ', '_')}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.xlsx"
                 df.to_excel(nome_arquivo, index=False)
